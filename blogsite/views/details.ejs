@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partial/head.ejs") %>
+
+  <body>
+    <%- include("./partial/nav.ejs") %>
+
+    <div class="details content">
+      <h2><%= blog.title %></h2>
+      <div clas="content">
+        <p><%= blog.body %></p>
+      </div>
+      <button onclick="deleteBlog('<%= blog._id %>')" class="delete">
+        Delete
+      </button>
+    </div>
+
+    <%- include("./partial/footer.ejs") %>
+    <script>
+      const deleteBlog = (id) => {
+        fetch(`/blogs/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Blog deleted successfully");
+              window.location.href = "/blogs";
+            } else {
+              alert("Failed to delete blog");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      };
+    </script>
+  </body>
+</html>
